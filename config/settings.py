@@ -39,9 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # third party
+    'crispy_forms',
+    'crispy_bootstrap4',
 
     # local
     'pages',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +135,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# auth
+AUTH_USER_MODEL = 'accounts.CustomUser'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
+# crispy forms
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
