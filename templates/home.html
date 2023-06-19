@@ -1,6 +1,7 @@
 {% extends '_base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Home Page{% endblock title %}
+
 
 {% block content %}
     <h1>Home Page</h1>
@@ -9,4 +10,4 @@
     {% else %}
         <p><a href="{% url 'login' %}">Login</a> | <a href="{% url 'signup' %}">SignUp</a></p>
     {% endif %}
-{% endblock %}
+{% endblock content %}

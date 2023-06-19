@@ -1,10 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
 
-</body>
-</html>
+{% block title %}Delete {{ book.title|capfirst }} Book{% endblock title %}
+
+
+{% block content %}
+    <div class="container mt-4" dir="ltr">
+        <div class="row">
+            <div class="col-9">
+                <div class="card shadow my-3">
+                    <h5 class="card-header bg-success text-light px-5">Delete "{{ book.title|capfirst }}" Book</h5>
+                    <div class="px-5 pt-3 pb-5">
+                        <h1>Are You Sure?</h1>
+                        <p>Are You Sure Want to Delete "{{ book.title|capfirst }}" Book?</p>
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <button class="btn-sm btn-danger mt-3" type="submit">Yes/Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+
+                <div class="card my-3 shadow">
+                    <h5 class="card-header bg-warning text-light">Guide</h5>
+                    <div class="card-body">
+                        <p class="card-text">
+                            اطلاعات کتاب را در فرم این صفحه وارد کنید و سپس بر روی دکمه ذخیره کلیک کنید.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

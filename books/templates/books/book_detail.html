@@ -1,10 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
 
-</body>
-</html>
+{% block title %}{{ book.title }}{% endblock title %}
+
+{% block content %}
+    <div class="container mt-5" dir="ltr">
+        <div class="">
+            <div class="">
+                <div class="d-flex justify-content-center">
+                    <div class="row w-sm-75 w-100">
+                        <div class="col-xs-12 col-md-3 d-flex justify-content-center">
+                            <div>
+                                {% if book.cover %}
+                                    <img src="{{ book.cover.url }}"
+                                         class="img-fluid rounded-start" alt="...">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6 mt-md-1 mt-4">
+                            <h1>{{ book.title|capfirst }}</h1>
+                            <h5 class="small my-1"><span class="text-muted">Author: </span>{{ book.author }}</h5>
+                            <br>
+                            {% if user.is_authenticated %}
+                                <div>
+                                    {% if book.user.username == request.user.username %}
+                                        <a class="btn-sm btn-warning text-decoration-none"
+                                           href="{% url 'update_book' book.id %}">Edit Book</a>
+                                        <a class="btn-sm btn-danger text-decoration-none"
+                                           href="{% url 'delete_book' book.id %}">Delete Book</a>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-12 col-md-3 d-flex flex-column">
+                            <h3 class="align-self-center pt-2 text-muted align-self-md-end">
+                                {{ book.price }} $
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <div class="my-3 p-5 w-sm-75 w-100">
+                        {{ book.description|linebreaks }}
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <div class="card shadow my-3 p-5 w-sm-75 w-100">
+                        <h2 class="mb-5">Comments: </h2>
+                        {% for comment in comments %}
+                            {% if comment.is_active %}
+                                <div class="border-bottom mb-3">
+                                    <h5 class="mb-3">{{ comment.user.username }}</h5>
+                                    {% if comment.recommend %}
+                                        <p>I Recommend.</p>
+                                    {% else %}
+                                        <p>Not Recommend.</p>
+                                    {% endif %}
+                                    <p>{{ comment.text|linebreaks }}</p>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <div class="card shadow my-3 p-5 w-sm-75 w-100">
+                        <h3>Enter Your Comment:</h3>
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ comment_form|crispy }}
+                            <button type="submit" class="btn btn-primary mt-3">Send Comment</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}

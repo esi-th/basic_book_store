@@ -1,10 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
 
-</body>
-</html>
+{% block title %}Update {{ book.title|capfirst }} Book{% endblock title %}
+
+{% block content %}
+    <div class="container mt-4" dir="ltr">
+        <div class="row">
+            <div class="col-9">
+                <div class="card shadow my-3">
+                    <h5 class="card-header bg-success text-light px-5">Update "{{ book.title|capfirst }}" Information</h5>
+                    <div class="px-5 pt-3 pb-5">
+                        <form method="POST">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <button class="btn-sm btn-info mt-3" type="submit">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+
+                <div class="card my-3 shadow">
+                    <h5 class="card-header bg-warning text-light">Guide</h5>
+                    <div class="card-body">
+                        <p class="card-text">
+                            اطلاعات کتاب را در فرم این صفحه وارد کنید و سپس بر روی دکمه ذخیره کلیک کنید.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
